@@ -5,30 +5,19 @@ if (process.env.TRACE) {
 const Koa = require('koa');
 const app = new Koa();
 
-const config = require('./config/defaults');
+const config = require('./config');
 
 const path = require('path');
 const fs = require('fs');
 
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (e) {
-    if (e.status) {
-      ctx.body = e.message;
-      ctx.status = e.status;
-    } else {
-      ctx.body = 'Server Error';
-      ctx.status = 500;
-      console.error(e.message, e.stack);
-    }
-  }
-});
+const middlewares = fs.readdirSync(path.join(__dirname, 'middlewares')).sort();
+middlewares
+  .forEach(middlewares => require(`./middlewares/${middlewares}`).init(app));
 
 app.use(async ctx => {
   ctx.body = 'Hello World';
 });
 
-app.listen(config.port, () => {
-  console.log(`server is listening on ${config.port} port`);
+app.listen(config.defaults.port, () => {
+  console.log(`server is listening, port: ${config.defaults.port}`);
 });
