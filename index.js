@@ -4,11 +4,13 @@ if (process.env.TRACE) {
 
 const Koa = require('koa');
 const app = new Koa();
-
+const Router = require('koa-router');
+const router = new Router();
+const bodyParser = require('koa-bodyparser');
 const config = require('./config/defaults');
 
-const path = require('path');
-const fs = require('fs');
+const Controller = require('./controller.js');
+const controller = Controller();
 
 app.use(async (ctx, next) => {
   try {
@@ -25,9 +27,14 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
+app.use(bodyParser());
+
+router.get('/tasks', controller.read);
+router.post('/newTask', controller.wright);
+router.put('/updateTask/:id', controller.update);
+router.delete('/removeTask/:id', controller.remove);
+
+app.use(router.routes());
 
 app.listen(config.port, () => {
   console.log(`server is listening on ${config.port} port`);

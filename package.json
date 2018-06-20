@@ -1,5 +1,5 @@
 {
-  "name": "chat",
+  "name": "to-do-koa",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.5.0"
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "uniqid": "^5.0.3"
   }
 }
