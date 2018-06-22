@@ -31,6 +31,7 @@ app.use(async (ctx, next) => {
 app.use(bodyParser());
 app.use(cors());
 
+router.get('/', controller.read);
 router.get('/tasks', controller.read);
 router.post('/newTask', controller.wright);
 router.put('/updateTask/:id', controller.update);

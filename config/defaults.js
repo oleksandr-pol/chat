@@ -1,5 +1,5 @@
 module.exports = {
-  port: 3000,
+  port: process.env.PORT || 5000,
   root: process.cwd(),
   jsonLimit: '56kb',
   secret: 'mySecret'
