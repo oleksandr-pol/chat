@@ -8,6 +8,7 @@ const Router = require('koa-router');
 const router = new Router();
 const bodyParser = require('koa-bodyparser');
 const config = require('./config/defaults');
+const cors = require('@koa/cors');
 
 const Controller = require('./controller.js');
 const controller = Controller();
@@ -28,6 +29,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(bodyParser());
+app.use(cors());
 
 router.get('/tasks', controller.read);
 router.post('/newTask', controller.wright);
